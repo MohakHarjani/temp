@@ -1,0 +1,85 @@
+
+Student : 
+==========
+studentId
+name
+email
+schoolName
+joiningDate
+phoneNumber
+address
+List<Enrollment>enrollments (One to Many)
+List<TestResult>testResults (One to Many)
+
+
+Teacher : 
+=========
+teacherId
+name
+phoneNumber
+experience
+List<Batch>batches (One to Many)
+
+
+Batch :
+========
+batchId
+name
+subject
+startDate
+fees
+teacher (Many to One)
+List<Enrollment> enrollments (One to Many)
+List<Test> tests (One to Many)
+
+
+Enrollment :
+===========
+enrolmentId
+paymentPlan
+enrollmentDate
+pendingAmount
+student (Many to One)
+batch (Many to One)
+List<Payment>payments (One to Many)
+
+
+Payment : 
+==========
+paymentId
+amountPaid
+paymentDate
+paymentMode
+Note
+Enrollment (Many to One)
+
+
+Test :
+======
+testId
+name
+testDate
+maxMarks
+subject
+List<Batch>batches (Many to Many)
+List<TestResult> testResults (One to Many)
+
+
+
+TestResults :
+=============
+resultId
+marks
+remarks
+test (Many to One)
+student (Many to One)
+
+
+
+
+
+
+
+
+
+
