@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Angular In‑Depth Learning Checklist (6‑Week)</title>
+  <style>
+    :root{
+      --bg1:#f8fafc;
+      --bg2:#eef2ff;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --muted:#475569;
+      --ring:#e2e8f0;
+      --accent1:#6366f1;
+      --accent2:#8b5cf6;
+      --success:#10b981;
+      --danger:#ef4444;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background: radial-gradient(1200px 700px at 10% -10%, var(--bg2), transparent),
+                  radial-gradient(1000px 600px at 110% 10%, #e0e7ff, transparent),
+                  var(--bg1);
+    }
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    h1{font-weight:800;letter-spacing:-0.02em;margin:0 0 8px}
+    p.lead{color:var(--muted);margin:0 0 16px}
+    .stack{display:grid;gap:16px}
+    .toolbar{
+      display:grid;gap:12px;grid-template-columns: 1fr auto;
+      align-items:center;margin:16px 0 8px;
+    }
+    .row{display:flex;gap:10px;align-items:center}
+    input[type="search"]{
+      width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--ring);background:#fff;
+      outline:none;box-shadow:0 1px 0 rgba(0,0,0,.02);
+    }
+    input[type="search"]:focus{border-color:#a5b4fc;box-shadow:0 0 0 4px rgba(99,102,241,.15)}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;
+      border:1px solid var(--ring);background:#fff;cursor:pointer;font-weight:600;
+    }
+    .btn:hover{background:#f8fafc}
+    .btn.reset{background:#fff0f0;border-color:#fecaca;color:#b91c1c}
+    .btn.reset:hover{background:#fee2e2}
+    .btn.primary{background:#eef2ff;border-color:#c7d2fe;color:#3730a3}
+    .btn.primary:hover{background:#e0e7ff}
+    .card{
+      background:var(--card);border:1px solid var(--ring);
+      border-radius:18px;padding:18px;box-shadow:0 6px 20px rgba(15,23,42,.04);
+    }
+    .topic-header{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .topic-title{font-size:20px;font-weight:700;margin:0}
+    .topic-desc{flex-basis:100%;color:var(--muted);margin-top:4px}
+    .progress{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+    .bar{height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:0;transition:width .4s ease}
+    .tag{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;font-size:12px;
+      background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe}
+    .grid{display:grid;gap:14px}
+    @media(min-width:860px){ .grid.cols-2{grid-template-columns:1fr 1fr} }
+    .subtopic{border:1px solid var(--ring);border-radius:16px;padding:14px}
+    .sub-title{font-weight:700;margin:0 0 8px;font-size:16px}
+    ul.bullets{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    .bullet{
+      display:flex;gap:10px;align-items:flex-start;border:1px solid var(--ring);border-radius:12px;padding:10px;
+      background:#fff;transition: background .2s, border-color .2s, transform .05s;
+    }
+    .bullet:hover{background:#f8fafc}
+    .bullet.checked{background: #ecfdf5;border-color:#bbf7d0}
+    .bullet .label{cursor:pointer;user-select:none;line-height:1.35}
+    input[type="checkbox"]{
+      width:20px;height:20px;border-radius:6px;border:1px solid #cbd5e1;appearance:none;
+      display:grid;place-content:center;background:#fff;transition: all .15s ease;
+    }
+    input[type="checkbox"]{
+  width:20px;height:20px;border-radius:6px;border:1px solid #cbd5e1;appearance:none;
+  display:grid;place-content:center;background:#fff;transition: all .15s ease;
+}
+input[type="checkbox"]::before{
+  content:"✔";
+  font-size:14px;
+  color:white;
+  transform:scale(0);
+  transition: transform .12s ease-in-out;
+}
+input[type="checkbox"]:checked{
+  border-color:#86efac;
+  background: var(--success);
+  color:white;
+}
+input[type="checkbox"]:checked::before{
+  transform:scale(1);
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Angular In‑Depth Learning Checklist</h1>
+    <p class="lead">A comprehensive, topic‑wise checklist for a 6‑week plan. Tick items as you master them — progress is saved in your browser.</p>
+
+    <div class="toolbar">
+      <div class="row">
+        <input id="search" type="search" placeholder="Search topics, e.g. ‘OnPush’, ‘NgRx’, ‘CVA’…" />
+        <button id="clear" class="btn">Clear</button>
+      </div>
+      <div class="row">
+        <div id="overall-meta" class="muted" style="margin-right:8px"></div>
+        <button id="reset" class="btn reset" title="Uncheck everything">Reset</button>
+      </div>
+    </div>
+    <div class="progress" title="Overall Progress">
+      <div id="overall-bar" class="bar"></div>
+    </div>
+
+    <div id="topics" class="stack" style="margin-top:16px"></div>
+
+    <div class="footer">Built for Mohak · Works offline · Your progress uses localStorage in this browser.</div>
+  </div>
+
+<script>
+// ---- Data ---------------------------------------------------------------
+const TOPICS = [
+  {
+    id: "week1-foundations",
+    title: "Week 1 · Foundations & Components",
+    description: "Set up environment, solid TypeScript, and core Angular building blocks.",
+    subtopics: [
+      {
+        id: "ts-basics",
+        title: "TypeScript Essentials",
+        bullets: [
+          { id: "ts-types", label: "Primitive & object types, type inference" },
+          { id: "ts-interfaces", label: "Interfaces vs type aliases, extension & intersection" },
+          { id: "ts-generics", label: "Generics (functions, classes, constraints)" },
+          { id: "ts-classes", label: "Classes, access modifiers, readonly, abstract" },
+          { id: "ts-union-narrowing", label: "Union types & type narrowing (in, instanceof, custom predicates)" },
+          { id: "ts-modules", label: "ES modules, import/export patterns" },
+        ],
+      },
+      {
+        id: "angular-setup",
+        title: "Angular Setup & Project Structure",
+        bullets: [
+          { id: "cli", label: "Angular CLI commands, workspaces, environments" },
+          { id: "proj-structure", label: "Recommended folder structure (feature vs shared)" },
+          { id: "standalone", label: "Standalone components vs NgModules: when & how" },
+          { id: "styling", label: "Global styles, component styles, ViewEncapsulation" },
+        ],
+      },
+      {
+        id: "components-templates",
+        title: "Components & Templates",
+        bullets: [
+          { id: "binding", label: "Data binding: interpolation, property, event, two‑way" },
+          { id: "lifecycle", label: "Lifecycle hooks (OnInit, OnChanges, AfterViewInit, OnDestroy)" },
+          { id: "inputs-outputs", label: "@Input/@Output, EventEmitter patterns" },
+          { id: "content-projection", label: "Content Projection (ng-content, select), multi-slot" },
+          { id: "viewchild", label: "@ViewChild/@ContentChild and query timing" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "week2-directives-pipes-di",
+    title: "Week 2 · Directives, Pipes, Services & DI",
+    description: "Learn to extend templates, transform data, and architect shared logic via DI.",
+    subtopics: [
+      {
+        id: "directives",
+        title: "Directives",
+        bullets: [
+          { id: "structural", label: "Structural: *ngIf, *ngFor, *ngSwitch, microsyntax & trackBy" },
+          { id: "attribute", label: "Attribute: [ngClass], [ngStyle], custom attribute directives" },
+          { id: "custom-structural", label: "Custom structural directives (template refs, ViewContainerRef)" },
+        ],
+      },
+      {
+        id: "pipes",
+        title: "Pipes",
+        bullets: [
+          { id: "builtin-pipes", label: "Built‑in pipes (async, date, currency, json) & purity" },
+          { id: "custom-pipes", label: "Custom pipes, pure vs impure, performance concerns" },
+          { id: "async-pipe", label: "Async pipe patterns with Observables & cleanup" },
+        ],
+      },
+      {
+        id: "services-di",
+        title: "Services & Dependency Injection",
+        bullets: [
+          { id: "providers", label: "Providers, providedIn scopes, tree‑shakable providers" },
+          { id: "injectors", label: "Hierarchical injectors, component providers" },
+          { id: "tokens", label: "InjectionToken, multi providers, optional/self/skipSelf" },
+          { id: "singleton-state", label: "Service as state store (BehaviorSubject, ReplaySubject)" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "week3-routing-forms",
+    title: "Week 3 · Routing, Navigation & Forms",
+    description: "Navigation architecture and robust data capture with reactive patterns.",
+    subtopics: [
+      {
+        id: "routing",
+        title: "Routing & Navigation",
+        bullets: [
+          { id: "config", label: "Route config, child routes, route data & pathMatch" },
+          { id: "params", label: "Route params & query params, ActivatedRoute patterns" },
+          { id: "lazy", label: "Lazy loading, standalone route APIs, preloading strategies" },
+          { id: "guards", label: "Guards: CanActivate/CanDeactivate/Resolve/CanMatch" },
+          { id: "aux-routes", label: "Auxiliary routes & named outlets" },
+        ],
+      },
+      {
+        id: "forms",
+        title: "Forms (Template‑Driven & Reactive)",
+        bullets: [
+          { id: "template-driven", label: "Template‑driven forms, ngModel, validation directives" },
+          { id: "reactive", label: "Reactive forms: FormControl, FormGroup, FormArray" },
+          { id: "validators", label: "Custom validators (sync/async), cross‑field validation" },
+          { id: "cva", label: "ControlValueAccessor for custom form controls" },
+          { id: "dynamic-forms", label: "Dynamic forms from JSON schema/metadata" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "week4-http-rxjs-state",
+    title: "Week 4 · HTTP, RxJS & State Management",
+    description: "Master async flows, API integration, and predictable app state.",
+    subtopics: [
+      {
+        id: "http",
+        title: "HTTP & Interceptors",
+        bullets: [
+          { id: "client", label: "HttpClient: get/post/put/delete, typing responses" },
+          { id: "interceptors", label: "Interceptors: auth headers, loading, error handling, retry" },
+          { id: "caching", label: "Client‑side caching strategies (ETags, in‑memory, RxJS shareReplay)" },
+          { id: "file-transfer", label: "File upload/download, reportProgress" },
+        ],
+      },
+      {
+        id: "rxjs",
+        title: "RxJS Deep Dive",
+        bullets: [
+          { id: "obs-basics", label: "Cold vs hot observables, creation (of, from, interval)" },
+          { id: "subjects", label: "Subject, BehaviorSubject, ReplaySubject, AsyncSubject" },
+          { id: "mapping", label: "Higher‑order mapping: switchMap, mergeMap, concatMap, exhaustMap" },
+          { id: "combination", label: "combineLatest, forkJoin, withLatestFrom, race" },
+          { id: "error-handling", label: "catchError, retry, finalize, onErrorResumeNext" },
+          { id: "backpressure", label: "throttleTime, debounceTime, auditTime, sampleTime" },
+          { id: "schedulers", label: "Schedulers & microtask/macrotask timing" },
+        ],
+      },
+      {
+        id: "state",
+        title: "State Management",
+        bullets: [
+          { id: "service-store", label: "Service‑based store (signals/BehaviorSubject)" },
+          { id: "ngrx-core", label: "NgRx: actions, reducers, effects, selectors" },
+          { id: "ngrx-entity", label: "NgRx Entity, router‑store, devtools" },
+          { id: "component-store", label: "ComponentStore for local/feature state" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "week5-advanced-performance",
+    title: "Week 5 · Advanced Angular & Performance",
+    description: "Write fast, scalable apps with modern Angular patterns.",
+    subtopics: [
+      {
+        id: "change-detection",
+        title: "Change Detection & Rendering",
+        bullets: [
+          { id: "cd-strategies", label: "Default vs OnPush, immutability, trackBy for lists" },
+          { id: "zones", label: "Zones vs zoneless, manual change detection, markForCheck" },
+          { id: "signals", label: "Signals & signal‑based components (concepts & migration)" },
+        ],
+      },
+      {
+        id: "arch",
+        title: "Architecture & Reuse",
+        bullets: [
+          { id: "smart-dumb", label: "Smart vs Presentational components, container patterns" },
+          { id: "lib-design", label: "Shared UI libraries, design systems, module boundaries/Nx" },
+          { id: "config", label: "Environment configs, feature flags" },
+        ],
+      },
+      {
+        id: "perf-best",
+        title: "Performance & DX",
+        bullets: [
+          { id: "lazy-preload", label: "Lazy loading, preloading strategies, route‑level code splitting" },
+          { id: "bundle", label: "Bundle analysis, budgets, deferrable views, image optimization" },
+          { id: "memoization", label: "Memoization, pure pipes, caching with RxJS" },
+        ],
+      },
+      {
+        id: "animations",
+        title: "Animations & UX",
+        bullets: [
+          { id: "angular-animations", label: "@angular/animations basics, triggers & transitions" },
+          { id: "route-animations", label: "Route transition animations" },
+          { id: "micro-interactions", label: "Micro‑interactions, skeleton loaders, toasts" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "week6-testing-deploy",
+    title: "Week 6 · Testing, Security, Accessibility & Deploy",
+    description: "Ship confidently with tests, a11y, security, and production builds.",
+    subtopics: [
+      {
+        id: "testing",
+        title: "Testing",
+        bullets: [
+          { id: "unit", label: "Unit testing services & pipes (Jasmine/Karma or Jest)" },
+          { id: "component-test", label: "Component testing with TestBed & Harnesses" },
+          { id: "http-test", label: "HttpTestingController, mocking interceptors & effects" },
+          { id: "e2e", label: "E2E overview (Cypress/Playwright)" },
+        ],
+      },
+      {
+        id: "security",
+        title: "Security & Auth",
+        bullets: [
+          { id: "xss", label: "Sanitization, bypassSecurityTrust pitfalls, DOM security" },
+          { id: "auth", label: "JWT handling, refresh tokens, CSRF basics" },
+          { id: "guards-authz", label: "AuthZ: role/permission guards, route data" },
+        ],
+      },
+      {
+        id: "a11y-i18n",
+        title: "Accessibility & i18n",
+        bullets: [
+          { id: "a11y-basics", label: "Semantic HTML, ARIA, focus management" },
+          { id: "forms-a11y", label: "Accessible forms, error messaging, labels & hints" },
+          { id: "i18n", label: "Angular i18n, message extraction, RTL considerations" },
+        ],
+      },
+      {
+        id: "build-deploy",
+        title: "Build, SSR & Deploy",
+        bullets: [
+          { id: "environments", label: "Build configs, file replacements, env variables" },
+          { id: "ssr", label: "Angular Universal (SSR) & pre‑rendering basics" },
+          { id: "pwa", label: "PWA, service workers, offline caching" },
+          { id: "deploy", label: "Hosting (Vercel/Netlify), CI/CD, caching & headers" },
+        ],
+      },
+    ],
+  },
+];
+// ---- Storage ------------------------------------------------------------
+const STORAGE_KEY = "angular-checklist-v1";
+function loadState(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch{ return {}; }
+}
+function saveState(state){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+// ---- Build UI -----------------------------------------------------------
+const topicsEl = document.getElementById("topics");
+const overallBar = document.getElementById("overall-bar");
+const overallMeta = document.getElementById("overall-meta");
+const searchInput = document.getElementById("search");
+const clearBtn = document.getElementById("clear");
+const resetBtn = document.getElementById("reset");
+let state = loadState(); // { [bulletId]: true/false }
+function bulletKey(tid, sid, bid){ return `${tid}::${sid}::${bid}`; }
+function flattenIds(){
+  const ids = [];
+  for(const t of TOPICS) for(const s of t.subtopics) for(const b of s.bullets){
+    ids.push(bulletKey(t.id, s.id, b.id));
+  }
+  return ids;
+}
+const ALL_IDS = flattenIds();
+function progressOf(ids){
+  const total = ids.length;
+  const done = ids.filter(id => state[id]).length;
+  const pct = total ? Math.round((done/total)*100) : 0;
+  return {done,total,pct};
+}
+function updateOverall(){
+  const p = progressOf(ALL_IDS);
+  overallBar.style.width = p.pct + "%";
+  overallMeta.textContent = `${p.done}/${p.total} · ${p.pct}%`;
+}
+function makeTopic(topic){
+  const sec = document.createElement("section");
+  sec.className = "card";
+  // header
+  const header = document.createElement("div");
+  header.className = "topic-header";
+  const expandBtn = document.createElement("button");
+  expandBtn.className = "btn";
+  expandBtn.textContent = "Collapse";
+  const title = document.createElement("h2");
+  title.className = "topic-title";
+  title.textContent = topic.title;
+  const tag = document.createElement("span");
+  tag.className = "tag";
+  const desc = document.createElement("p");
+  desc.className = "topic-desc";
+  desc.textContent = topic.description || "";
+  const markBtn = document.createElement("button");
+  markBtn.className = "btn primary";
+  // progress bar
+  const pWrap = document.createElement("div");
+  pWrap.className = "progress"; pWrap.style.flexBasis = "100%";
+  const pBar = document.createElement("div");
+  pBar.className = "bar"; pWrap.appendChild(pBar);
+  // grid for subtopics
+  const grid = document.createElement("div");
+  grid.className = "grid cols-2"; grid.style.marginTop = "12px";
+  // fill subtopics
+  const topicIds = [];
+  for(const st of topic.subtopics){
+    const card = document.createElement("div");
+    card.className = "subtopic";
+    const h3 = document.createElement("h3"); h3.className="sub-title"; h3.textContent = st.title;
+    card.appendChild(h3);
+    const ul = document.createElement("ul"); ul.className = "bullets";
+    for(const b of st.bullets){
+      const id = bulletKey(topic.id, st.id, b.id);
+      topicIds.push(id);
+      const li = document.createElement("li"); li.className = "bullet";
+      const cb = document.createElement("input"); cb.type="checkbox"; cb.id = id; cb.checked = !!state[id];
+      const label = document.createElement("label"); label.className="label"; label.htmlFor = id; label.textContent = b.label;
+      if(cb.checked) li.classList.add("checked");
+      cb.addEventListener("change", () => {
+        state[id] = cb.checked; saveState(state);
+        li.classList.toggle("checked", cb.checked);
+        updateTopicProgress(); updateOverall();
+      });
+      label.addEventListener("click", () => {
+        cb.checked = !cb.checked;
+        cb.dispatchEvent(new Event("change"));
+      });
+      li.appendChild(cb); li.appendChild(label); ul.appendChild(li);
+    }
+    card.appendChild(ul);
+    grid.appendChild(card);
+  }
+  function updateTopicProgress(){
+    const p = progressOf(topicIds);
+    tag.textContent = `${p.pct}% done`; pBar.style.width = p.pct + "%";
+    // update Mark/Unmark button
+    const allChecked = topicIds.every(id => state[id]);
+    markBtn.textContent = allChecked ? "Unmark all" : "Mark all";
+  }
+  // mark all toggle
+  markBtn.addEventListener("click", () => {
+    const allChecked = topicIds.every(id => state[id]);
+    for(const id of topicIds){ state[id] = !allChecked; }
+    saveState(state);
+    // reflect in checkboxes / bullet cards
+    for(const id of topicIds){
+      const cb = document.getElementById(id);
+      if(cb){ cb.checked = state[id]; cb.closest(".bullet")?.classList.toggle("checked", cb.checked); }
+    }
+    updateTopicProgress(); updateOverall();
+  });
+  // expand/collapse
+  let open = true;
+  expandBtn.addEventListener("click", () => {
+    open = !open;
+    grid.classList.toggle("collapse", !open);
+    expandBtn.textContent = open ? "Collapse" : "Expand";
+  });
+  function applySearchFilter(q){
+    let anyVisibleInTopic = false;
+    const qn = q.trim().toLowerCase();
+    for(const stCard of grid.children){
+      let anyVisibleInSub = false;
+      const titleText = stCard.querySelector(".sub-title").textContent.toLowerCase();
+      for(const li of stCard.querySelectorAll(".bullet")){
+        const txt = li.querySelector(".label").textContent.toLowerCase();
+        const show = !qn || txt.includes(qn) || titleText.includes(qn) || topic.title.toLowerCase().includes(qn);
+        li.style.display = show ? "" : "none";
+        if(show) anyVisibleInSub = true;
+      }
+      stCard.style.display = anyVisibleInSub ? "" : "none";
+      if(anyVisibleInSub) anyVisibleInTopic = true;
+    }
+    sec.style.display = anyVisibleInTopic ? "" : "none";
+  }
+  // append all
+  header.appendChild(expandBtn);
+  header.appendChild(title);
+  header.appendChild(tag);
+  if(topic.description){ header.appendChild(desc); }
+  header.appendChild(markBtn);
+  header.appendChild(pWrap);
+  sec.appendChild(header);
+  sec.appendChild(grid);
+  // initialize progress
+  updateTopicProgress();
+  // attach search filter handler
+  sec.applySearch = applySearchFilter;
+  return sec;
+}
+function build(){
+  topicsEl.innerHTML = "";
+  const fr = document.createDocumentFragment();
+  for(const t of TOPICS){
+    const node = makeTopic(t);
+    fr.appendChild(node);
+  }
+  topicsEl.appendChild(fr);
+  updateOverall();
+  applySearch(searchInput.value);
+}
+function applySearch(q){
+  for(const sec of topicsEl.children){
+    if(typeof sec.applySearch === "function"){ sec.applySearch(q || ""); }
+  }
+}
+build();
+
+// ---- Controls -----------------------------------------------------------
+searchInput.addEventListener("input", () => applySearch(searchInput.value));
+clearBtn.addEventListener("click", () => { searchInput.value=""; applySearch(""); });
+resetBtn.addEventListener("click", () => {
+  if(confirm("Reset all checkboxes? This will clear saved progress for this checklist.")){
+    state = {}; saveState(state);
+    for(const id of ALL_IDS){
+      const cb = document.getElementById(id);
+      if(cb){ cb.checked = false; cb.closest(".bullet")?.classList.remove("checked"); }
+    }
+    updateOverall();
+    // also update each topic's mark/unmark and bar
+    for(const sec of topicsEl.children){
+      const btns = sec.querySelectorAll(".btn.primary");
+      if(btns[0]) btns[0].textContent = "Mark all";
+      const bar = sec.querySelector(".bar"); if(bar) bar.style.width = "0%";
+      const tag = sec.querySelector(".tag"); if(tag) tag.textContent = "0% done";
+    }
+  }
+});
+</script>
+</body>
+</html>
